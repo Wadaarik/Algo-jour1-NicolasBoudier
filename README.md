@@ -6,7 +6,9 @@
 - Lilian Gautier
 
 ## DISCORD 
-- TD4
+- Channel TD4
+
+## Explication
 
 ### Bubble sort
 - Compare chaque éléments consécutivement et se permutent entre eux si besoin il y a
