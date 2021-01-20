@@ -1,0 +1,48 @@
+De quoi est constitué un block d’une Blockchain ?
+1. Hash du block précédent
+2. Donnée ou transaction
+3. Signature
+4. Preuve de travail
+5. Sa date de création
+6. Hash du block lui- même
+
+
+1. Function qui get le hash du block n-1.
+
+2. Récupéré la valeur du block n faite pour la transaction.
+
+3. Hash un message puis crée une private key pour la stocker sur ton pc.
+
+4.
+
+5. Function qui récupère la date/heure.
+
+6. Function qui fais le hashage de l'objet (général) en lui même, doit commencer par quatre 0.
+
+
+
+#Note
+Créer une class block
+Créer une class Blockchain qui regroupe les blocks
+    Le hash du block n
+    Le hash du block n-1
+
+Implémenter une vérif de la blockchain
+Les hash(hash Actuel, hash Previous) commence par trois 0
+Que le hash Previous equivaut bien au hash du n-1
+
+Delete le dernier block
+Save dans des files la blockchaine/block
+Demander a l'user les données
+Demander le nbe de 0 voulu
+
+
+Faire que les [:3] dans validityBlock() soit self.zero
+Voir si pour toDeleteLastBlock = ... on ne zappe pas le input quand c'est le block 0
+
+
+
+
+
+
+
