@@ -44,6 +44,7 @@ class Block:
 class Blockchain():
     def __init__(self, zero):
         self.block = []
+        self.nbZero = zero
         self.zero = '0' * zero
         self.validity = False
 
@@ -56,15 +57,15 @@ class Blockchain():
     def validityBlock(self):
         for index, ablock in enumerate(self.block):
             if index != 0:
-                if ablock.prevHash[:3] == self.zero \
-                        and ablock.hashActu[:3] == self.zero \
+                if ablock.prevHash[:self.nbZero] == self.zero \
+                        and ablock.hashActu[:self.nbZero] == self.zero \
                         and ablock.previousHash == self.block[index - 1].getHashActu() \
                         and ablock.data \
                         and ablock.timestamp:
                     self.validity = True
             else:
-                if ablock.prevHash[:3] == self.zero \
-                        and ablock.hashActu[:3] == self.zero \
+                if ablock.prevHash[:self.nbZero] == self.zero \
+                        and ablock.hashActu[:self.nbZero] == self.zero \
                         and ablock.data \
                         and ablock.timestamp:
                     self.validity = True
@@ -83,6 +84,7 @@ class Blockchain():
 
     def deleteLastBlock(self):
         self.block.pop()
+        Block.prevHash = self.block[-1].hashActu
 
     def saveBlockchain(self):
         dateUse = str(datetime.now().strftime("%y%m%d-%H_%M_%S"))
@@ -101,9 +103,10 @@ for x in range(nbBlock):
     b = Block(data)
     blockchain.addBlock(b)
 
-    # toDeleteLastBlock = input('Voulez-vous supprimer le dernier block ? (y/n) ')
-    # if toDeleteLastBlock == 'y' or toDeleteLastBlock == 'yes':
-    #     blockchain.deleteLastBlock()
+    if x != 0:
+        toDeleteLastBlock = input('Voulez-vous supprimer le dernier block ? (y/n) ')
+        if toDeleteLastBlock == 'y' or toDeleteLastBlock == 'yes':
+            blockchain.deleteLastBlock()
 
 toSave = input('\nVoulez-vous sauvegarder la blockchain dans un ficher ? (y/n) ')
 if toSave == 'y' or toSave == 'yes':
