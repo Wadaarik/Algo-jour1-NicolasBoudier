@@ -68,7 +68,7 @@ Le temps est de 0.0001 sec
 ***
 
 ### Shell sort
-- Variante du `Selection sort` (tri par insertion)
+- Variante du `Insertion sort` (tri par insertion)
 - Tri chaque éléments séparés de n positions
 - Diminue petit à petit n jusqu'à 1
 
