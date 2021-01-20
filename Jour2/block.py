@@ -75,7 +75,7 @@ class Blockchain():
     def getBlockchain(self):
         for index, ablock in enumerate(self.block):
             print('Block #' + str(index) + ' [')
-            print('    Précédent hash : ' + str(ablock.previousHash))
+            print('    Previous hash : ' + str(ablock.previousHash))
             print('    Timestamp : ' + str(ablock.timestamp))
             print('    Data : ' + ablock.data)
             print('    Hash : ' + str(ablock.hashActu))
@@ -83,34 +83,51 @@ class Blockchain():
             print('] \n')
 
     def deleteLastBlock(self):
-        self.block.pop()
-        Block.prevHash = self.block[-1].hashActu
+        answerPossible = ['yes', 'y', 'no', 'n']
+
+        toDeleteLastBlock = input('Voulez-vous supprimer le dernier block ? (y/n) ')
+        if toDeleteLastBlock in answerPossible:
+            if toDeleteLastBlock == 'y' or toDeleteLastBlock == 'yes':
+                self.block.pop()
+                Block.prevHash = self.block[-1].hashActu
+        else:
+            print('Veuillez mettre une valeur valide')
+            blockchain.deleteLastBlock()
 
     def saveBlockchain(self):
-        dateUse = str(datetime.now().strftime("%y%m%d-%H_%M_%S"))
-        print('Le fichier est : ' + dateUse + '.json')
-        json_file = open("saveBlockchain-" + dateUse + '.json', "w")
-        json_file.write(json.dumps(self.block, default=lambda x: x.__dict__))
-        json_file.close()
+        answerPossible = ['yes', 'y', 'no', 'n']
+
+        toSave = input('\nVoulez-vous sauvegarder la blockchain dans un ficher ? (y/n) ')
+        if toSave in answerPossible:
+            if toSave == 'y' or toSave == 'yes':
+                dateUse = str(datetime.now().strftime("%y%m%d-%H_%M_%S"))
+                print('Le fichier est : ' + dateUse + '.json')
+                json_file = open("saveBlockchain-" + dateUse + '.json', "w")
+                json_file.write(json.dumps(self.block, default=lambda x: x.__dict__))
+                json_file.close()
+        else:
+            print('Veuillez mettre une valeur valide')
+            blockchain.saveBlockchain()
+
+
+def startBlockchain():
+    nbBlock = int(input('Combien de block voulez-vous créer ? '))
+
+    if nbBlock > 0:
+        for x in range(nbBlock):
+            data = input('Veuillez rentrer une donnée pour le block n°' + str(x + 1) + ' : ')
+            b = Block(data)
+            blockchain.addBlock(b)
+            if x != 0:
+                blockchain.deleteLastBlock()
+
+        blockchain.saveBlockchain()
+        print('\nBlockchain validity: ' + str(blockchain.validityBlock()))
+        blockchain.getBlockchain()
+    else:
+        print('Veuillez mettre un nombre supérieur à 0')
+        startBlockchain()
 
 
 blockchain = Blockchain(3)
-
-nbBlock = int(input('Combien de block voulez-vous créer ? '))
-
-for x in range(nbBlock):
-    data = input('Veuillez rentrer une donnée pour le block n°' + str(x + 1) + ' : ')
-    b = Block(data)
-    blockchain.addBlock(b)
-
-    if x != 0:
-        toDeleteLastBlock = input('Voulez-vous supprimer le dernier block ? (y/n) ')
-        if toDeleteLastBlock == 'y' or toDeleteLastBlock == 'yes':
-            blockchain.deleteLastBlock()
-
-toSave = input('\nVoulez-vous sauvegarder la blockchain dans un ficher ? (y/n) ')
-if toSave == 'y' or toSave == 'yes':
-    blockchain.saveBlockchain()
-
-print('\nBlockchain validity: ' + str(blockchain.validityBlock()))
-blockchain.getBlockchain()
+startBlockchain()
